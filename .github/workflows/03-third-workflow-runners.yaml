@@ -1,0 +1,32 @@
+name: third-workflow-runners
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ubuntu-info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show Ubuntu runner info
+        run: |
+          echo "Runner OS: $RUNNER_OS"
+          echo "Runner Arch: $RUNNER_ARCH"
+          echo "Temp Directory: $RUNNER_TEMP"
+
+  windows-info:
+    runs-on: windows-latest
+    steps:
+      - name: Show Windows runner info
+        run: |
+          Write-Host "Runner OS: $env:RUNNER_OS"
+          Write-Host "Runner Arch: $env:RUNNER_ARCH"
+        shell: pwsh
+
+  same-job-file-sharing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create file
+        run: echo "This file exists inside this job" > message.txt
+
+      - name: Read file
+        run: cat message.txt
